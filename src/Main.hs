@@ -9,8 +9,7 @@ trainInput cls = do
       putStrLn "\nNow classify some strings:\n"
       return cls
     _  -> do
-      let match = str =~ "^([^:]+):(.+)$" :: [[String]]
-      case match of
+      case (str =~ "^([^:]+):(.+)$" :: [[String]]) of
         (x:xs) -> trainInput $ C.train cls (x !! 1) (x !! 2)
         _      -> do
           putStrLn "Invalid format, please try again."
