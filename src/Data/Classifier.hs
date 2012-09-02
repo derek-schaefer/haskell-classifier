@@ -41,8 +41,9 @@ findWCount cls category word = fromMaybe 0 $ M.lookup (category, word) $ wcount 
 updateWCounts :: M.Map (String, String) Int -> String -> [(String, Int)] -> M.Map (String, String) Int
 updateWCounts wm category groups
     | groups == [] = wm
-    | otherwise    = updateWCounts (M.insertWith (+) (category, fst gHead) (snd gHead) wm) category (tail groups)
-    where gHead = head groups
+    | otherwise    = updateWCounts
+                     (M.insertWith (+) (category, fst $ head groups) (snd $ head groups) wm)
+                     category (tail groups)
 
 train :: Classifier -> String -> String -> Classifier
 train cls category text = Classifier ccounts wcounts
