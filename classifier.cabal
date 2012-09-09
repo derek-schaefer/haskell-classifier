@@ -64,10 +64,10 @@ Library
   Hs-source-dirs:    src
 
   -- Modules exported by the library.
-  Exposed-modules:   Data.Classifier
+  Exposed-modules:   Data.Classifier, Data.Tokenizer
 
   -- Packages needed in order to build this package.
-  Build-depends:     base, containers
+  Build-depends:     base, containers, stemmer
 
   -- Modules not exported by this package.
   --Other-modules:     
@@ -85,7 +85,7 @@ Executable classifier
   Main-is:           Main.hs
 
   -- Packages needed in order to build this package.
-  Build-depends:     base, containers, regex-posix
+  Build-depends:     base, containers, regex-posix, stemmer
 
   -- Modules not exported by this package.
   --Other-modules:     

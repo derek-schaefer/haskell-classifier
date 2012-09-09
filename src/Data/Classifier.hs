@@ -9,6 +9,7 @@ where
 import Data.Char
 import Data.Function
 import Data.Maybe
+import Data.Tokenizer
 import qualified Data.List as L
 import qualified Data.Map as M
 
@@ -19,18 +20,6 @@ data Classifier = Classifier {
 
 empty :: Classifier
 empty = Classifier M.empty M.empty
-
-notPunct :: Char -> Bool
-notPunct c = isAlpha c || isDigit c || isSpace c
-
-removePunct :: String -> String
-removePunct [] = []
-removePunct (a:st)
-    | notPunct a = a : removePunct st
-    | otherwise  =     removePunct st
-
-eachWord :: String -> [String]
-eachWord text = words $ map toLower $ removePunct text
 
 findCCount :: Classifier -> String -> Int
 findCCount cls category = fromMaybe 0 $ M.lookup category $ ccount cls
