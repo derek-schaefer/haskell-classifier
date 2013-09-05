@@ -1,4 +1,4 @@
-module Data.Tokenizer (eachWord) where
+module Data.Tokenizer (stemText) where
 
 import Data.Char
 import Data.List
@@ -13,8 +13,14 @@ removePunct (a:st)
     | notPunct a = a : removePunct st
     | otherwise  =     removePunct st
 
-eachWord :: String -> [String]
-eachWord text = stemWords English ((words $ map toLower $ removePunct text) \\ stopWords)
+stemWord :: String -> String
+stemWord w = stem English $ map (toLower) $ removePunct w
+
+stemWords :: [String] -> [String]
+stemWords ws = map (stemWord) ws
+
+stemText :: String -> [String]
+stemText text = stemWords $ (words text) \\ stopWords
 
 stopWords :: [String]
 stopWords = [

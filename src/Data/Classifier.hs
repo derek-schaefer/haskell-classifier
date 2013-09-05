@@ -37,7 +37,7 @@ updateWCounts wm category groups
 train :: Classifier -> String -> String -> Classifier
 train cls category text = Classifier ccounts wcounts
     where ccounts = M.insertWith (+) category 1 $ ccount cls
-          wordGroups = map (\xs -> (head xs, length xs)) $ L.group $ L.sort $ eachWord text
+          wordGroups = map (\xs -> (head xs, length xs)) $ L.group $ L.sort $ stemText text
           wcounts = updateWCounts (wcount cls) category wordGroups
 
 classify :: Classifier -> String -> String
@@ -57,7 +57,7 @@ textProb cls category text = c / t * d
 
 documentProb :: Classifier -> String -> String -> Double
 documentProb cls category text = foldl (\a b -> a * b) 1.0 wordWeights
-    where wordWeights = map (\w -> wordWeightedAvg cls category w) $ eachWord text
+    where wordWeights = map (\w -> wordWeightedAvg cls category w) $ stemText text
 
 categoryScores :: Classifier -> String -> [(String, Double)]
 categoryScores cls text = map (\c -> (c, textProb cls c text)) $ M.keys $ ccount cls
